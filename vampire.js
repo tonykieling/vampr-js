@@ -6,8 +6,6 @@ class Vampire {
     this.creator = null;
   }
 
-  /** Simple tree methods **/
-
   // Adds the vampire as an offspring of this vampire
   addOffspring(vampire) {
     this.offspring.push(vampire);
@@ -16,16 +14,11 @@ class Vampire {
 
   // Returns the total number of vampires created by that vampire
   get numberOfOffspring() {
-    let n = 0;
-    this.offspring.forEach((vamp) => {
-      n += 1
-    });
-    return n;
+    return this.offspring.length;
   }
 
   // Returns the number of vampires away from the original vampire this vampire is
   get numberOfVampiresFromOriginal() {
-    // console.log("1st creator: ", this.creator.name);
     let numberOfVamp = 0;
     let currentVamp = this;
     while (currentVamp.creator) {
@@ -45,7 +38,32 @@ class Vampire {
 
   // Returns the vampire object with that name, or null if no vampire exists with that name
   vampireWithName(name) {
+    let result = null;
     
+    let check = function(auxV) {
+      if (auxV.name === name) {
+        result = auxV;
+      }
+      auxV.offspring.forEach((child) => {
+        check(child);
+      })
+    }
+    check(this);
+    return result;
+
+    // let result = null;
+    
+    // let check = function(auxV) {
+    //   if (auxV.name === name) {
+    //     result = auxV;
+    //   }
+    //   auxV.offspring.forEach((child) => {
+    //     check(child);
+    //   })
+    // }
+    // check(this);
+    // return result;
+
   }
 
   // Returns the total number of vampires that exist
@@ -92,20 +110,6 @@ class Vampire {
     }
   }
 
-  vampireWithName(name) {
-
-  }
-
-  // Returns the total number of vampires that exist
-  get totalDescendents() {
-
-  }
-
-  // Returns an array of all the vampires that were converted after 1980
-  get allMillennialVampires() {
-
-  }
-  
 }
 
 module.exports = Vampire;
