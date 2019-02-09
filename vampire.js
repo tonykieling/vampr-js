@@ -43,6 +43,7 @@ class Vampire {
     let check = function(auxV) {
       if (auxV.name === name) {
         result = auxV;
+        return;
       }
       auxV.offspring.forEach((child) => {
         check(child);
@@ -50,61 +51,37 @@ class Vampire {
     }
     check(this);
     return result;
-
-    // let result = null;
-    
-    // let check = function(auxV) {
-    //   if (auxV.name === name) {
-    //     result = auxV;
-    //   }
-    //   auxV.offspring.forEach((child) => {
-    //     check(child);
-    //   })
-    // }
-    // check(this);
-    // return result;
-
   }
 
   // Returns the total number of vampires that exist
   get totalDescendents() {
-    console.log("----------------------");
-    // let vampires = [];
-    // vampires.push(this.name);
-
-    // if (this.offspring > 0) {
-    //   this.offspring.forEach((vampire) => {
-    //     vampires = vampire.concat(vampire.totalDescendents).name;
-    //   });
-    // }
-
-    // console.log("vampires: ", vampires);
-    // return this.offspring.length;
-
     let vampires = 0;  
     
-    let check = function(vampire) {
-      if (vampire.offspring.length > 0) {
-        console.log(vampire.offspring);
-      // if (Array.isArray(vampire.offspring)) {
-        for (const vampire of this.offspring) {
-          console.log("vampire: ", vampire);
-          check(vampire);
-        }
-      } else {
-        vampires += 1;
-      }
-console.log("calling");
-    check(this);
-    console.log("vampires: ", vampires);
+    let check = (vampire) => {
+      vampire.offspring.forEach((temVamp) => {
+        check(temVamp)
+      });
+      vampires += 1;
     }
-    return vampires;
+    check(this);
+    return vampires - 1;
   }
   
 
   // Returns an array of all the vampires that were converted after 1980
   get allMillennialVampires() {
-    
+    let allMillennials = [];
+
+    let check = (vampire) => {
+      if (vampire.yearConverted > 1980) {
+        allMillennials.push(vampire);
+      }
+      vampire.offspring.forEach ((temVamp) => {
+        check(temVamp);
+      });
+    }
+    check(this);
+    return allMillennials;    
   }
 
   /** Stretch **/
