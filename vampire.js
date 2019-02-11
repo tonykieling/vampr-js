@@ -95,26 +95,35 @@ class Vampire {
     if ((this.numberOfVampiresFromOriginal === 0)) return this;
     if (this.numberOfVampiresFromOriginal === 1 && vampire.numberOfVampiresFromOriginal === 1) return this.creator;
     if (this.name === vampire.name) return this;
-    // if (this.creator === vampire.creator) {
-    //   if (this.yearConverted > vampire.yearConverted) return this;
-    //   return vampire;
-    // }
+
+    const diff = this.numberOfVampiresFromOriginal - vampire.numberOfVampiresFromOriginal;
+    
 
     if (this.numberOfVampiresFromOriginal < vampire.numberOfVampiresFromOriginal) {
-      while (1) {
+      if (vampire.creator === this) {
+        return this;
+      }
+      while (vampire.creator) {
         if (vampire.creator === this.creator) {
           return this.creator;
         }
         vampire = vampire.creator;
       }
+      return vampire;
+
     } else {
+      if (this.creator === vampire) {
+        return vampire;
+      }      
       let temp = this;
-      while (1) {
+      while (temp.creator) {
         if (temp.creator === vampire.creator) {
           return vampire.creator;
         }
         temp = temp.creator;
       }
+    return temp;
+
     }
   }
 
