@@ -1,3 +1,6 @@
+// https://gist.github.com/tonykieling/adb0fc35f7368644cf837496f07aa6ad
+// https://gist.github.com/tonykieling/fc5ddcad2cc5d90a112c73b08f852974
+
 class Vampire {
   constructor(name, yearConverted) {
     this.name = name;
